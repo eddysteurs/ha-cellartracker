@@ -1,0 +1,12 @@
+{
+  "domain": "cellartracker",
+  "name": "CellarTracker",
+  "codeowners": ["@eddysteurs"],
+  "config_flow": true,
+  "documentation": "https://github.com/eddysteurs/ha-cellartracker",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/eddysteurs/ha-cellartracker/issues",
+  "requirements": [],
+  "version": "0.1.1"
+}

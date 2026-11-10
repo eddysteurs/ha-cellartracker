@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "CellarTracker",
+        "description": "Log in with your CellarTracker account.",
+        "data": {"username": "User name", "password": "Password"}
+      },
+      "reauth_confirm": {
+        "title": "CellarTracker",
+        "description": "Your CellarTracker password no longer works. Enter it again.",
+        "data": {"password": "Password"}
+      }
+    },
+    "error": {
+      "invalid_auth": "CellarTracker refused this user name or password.",
+      "cannot_connect": "Couldn't reach CellarTracker. Try again later."
+    },
+    "abort": {
+      "already_configured": "This CellarTracker account is already set up.",
+      "reauth_successful": "Password updated.",
+      "invalid_auth": "CellarTracker refused this user name or password.",
+      "cannot_connect": "Couldn't reach CellarTracker."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "CellarTracker options",
+        "data": {
+          "scan_interval": "Update every (minutes)",
+          "download_labels": "Download label images from CellarTracker"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "bottles": {"name": "Bottles"},
+      "value": {"name": "Cellar value"},
+      "average_value": {"name": "Average bottle value"},
+      "wines": {"name": "Wines"},
+      "consumed": {"name": "Consumed this year"},
+      "last_update": {"name": "Last update"}
+    },
+    "button": {
+      "refresh": {"name": "Refresh"}
+    }
+  }
+}
