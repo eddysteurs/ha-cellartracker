@@ -23,7 +23,7 @@ The big list attributes are kept out of the recorder database.
 Images live in `/config/www/wine/` and are served as `/local/wine/...`:
 
 * **Your own photos** win: name them after the CellarTracker wine number (`iWine`), for example `5534061.jpg` (`.jpg`, `.jpeg`, `.png`, `.webp`, any case).
-* **Label images** are downloaded from CellarTracker when available, as `ct_<iWine>.jpg`, at most 5 per update. A wine without a label is retried after 30 days. You can turn this off in the integration options.
+* **Label images** (optional, off by default): the integration can try to download labels from CellarTracker's wine pages as `ct_<iWine>.jpg`, at most 5 per update. CellarTracker currently answers automated requests with a bot challenge (HTTP 202/405), so this usually finds nothing; `sensor.cellartracker_last_update` shows the last attempt. Turn it on in the integration options if that changes.
 
 The `image` field of each wine already points at the right file, so dashboards don't have to guess.
 

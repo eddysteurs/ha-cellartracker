@@ -8,7 +8,7 @@ CONF_DOWNLOAD_LABELS = "download_labels"
 CONF_SCAN_INTERVAL = "scan_interval"
 
 DEFAULT_SCAN_INTERVAL = timedelta(minutes=60)
-DEFAULT_DOWNLOAD_LABELS = True
+DEFAULT_DOWNLOAD_LABELS = False
 
 BASE_URL = "https://www.cellartracker.com"
 XLQUERY_URL = f"{BASE_URL}/xlquery.asp"
