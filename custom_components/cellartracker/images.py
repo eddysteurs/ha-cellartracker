@@ -29,6 +29,11 @@ _LOGGER = logging.getLogger(__name__)
 
 OG_IMAGE = re.compile(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']', re.I)
 LABEL_IMG = re.compile(r'(?:src|href)=["\']([^"\']*label[^"\']*\.(?:jpe?g|png|webp))["\']', re.I)
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 BAD_HINTS = ("logo", "nolabel", "no_label", "default", "placeholder", "spacer")
 
 
@@ -39,7 +44,7 @@ class ImageManager:
         self.hass = hass
         self._session = session
         self._dir = hass.config.path("www", IMAGE_DIR)
-        self._store: Store[dict[str, float]] = Store(hass, 1, f"{DOMAIN}.{entry_id}.labels_v2")
+        self._store: Store[dict[str, float]] = Store(hass, 1, f"{DOMAIN}.{entry_id}.labels_v3")
         self._failed: dict[str, float] | None = None
         self.last_result: dict[str, Any] = {}
 
@@ -113,7 +118,7 @@ class ImageManager:
 
     async def _download_one(self, iwine: str) -> tuple[bool, str]:
         timeout = aiohttp.ClientTimeout(total=30)
-        async with self._session.get(WINE_URL, params={"iWine": iwine}, timeout=timeout) as resp:
+        async with self._session.get(WINE_URL, params={"iWine": iwine}, headers=HEADERS, timeout=timeout) as resp:
             if resp.status != 200:
                 return False, f"wine page HTTP {resp.status} ({resp.url.host})"
             html = await resp.text(errors="replace")
@@ -129,7 +134,7 @@ class ImageManager:
             url = "https:" + url
         elif url.startswith("/"):
             url = BASE_URL + url
-        async with self._session.get(url, timeout=timeout) as resp:
+        async with self._session.get(url, headers={**HEADERS, "Referer": f"{WINE_URL}?iWine={iwine}"}, timeout=timeout) as resp:
             ctype = resp.headers.get("Content-Type", "")
             if resp.status != 200 or not ctype.startswith("image/"):
                 return False, f"image HTTP {resp.status} {ctype} {url}"
